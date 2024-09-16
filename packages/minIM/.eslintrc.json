@@ -1,0 +1,23 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "ignorePatterns": ["dist/", "types/", "node_modules/", "webpack.config.js"],
+  "overrides": [
+    {
+      "files": ["src/**/*.ts"],
+      "excludedFiles": "*.test.ts"
+    }
+  ]
+}
