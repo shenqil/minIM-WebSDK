@@ -11,7 +11,7 @@ import {
   IConnectOpts,
   ITransportLayerEvent,
 } from '@/transportLayer/index';
-import { Message } from './protobuf/proto/messages';
+import { LoginReq } from './protobuf/proto/messages';
 
 export * from './protobuf/proto/messages';
 
@@ -27,7 +27,7 @@ export const EProtocolLayerEventName = Object.freeze({
  * 协议层所有的事件
  * */
 export interface IProtocolLayerEvent extends ITransportLayerEvent {
-  [EProtocolLayerEventName.MESSAGE_RECEIVED]: (data: Message) => void; //群聊 直播间 派对房消息派发
+  [EProtocolLayerEventName.MESSAGE_RECEIVED]: () => void; //群聊 直播间 派对房消息派发
 }
 
 /**
@@ -51,28 +51,28 @@ export abstract class AProtocolLayer {
    * 开始登陆
    * @param info
    */
-  abstract login(info: ILoginInfo): Promise<boolean>;
+  abstract login(info: LoginReq): Promise<boolean>;
 
   /**
    * 退出登陆
    */
   abstract logout(): void;
 
-  /**
-   * 发送消息
-   * @param msg
-   */
-  abstract sendMsg(msg: Message): Promise<boolean>;
+  // /**
+  //  * 发送消息
+  //  * @param msg
+  //  */
+  // abstract sendMsg(msg: Message): Promise<boolean>;
 
-  /**
-   * 监听事件
-   * @param name
-   * @param handle
-   */
-  abstract addEventListener<K extends ProtocolLayerEventName>(
-    name: K,
-    handle: IProtocolLayerEvent[K],
-  ): () => void;
+  // /**
+  //  * 监听事件
+  //  * @param name
+  //  * @param handle
+  //  */
+  // abstract addEventListener<K extends ProtocolLayerEventName>(
+  //   name: K,
+  //   handle: IProtocolLayerEvent[K],
+  // ): () => void;
 
   /**
    * 销毁

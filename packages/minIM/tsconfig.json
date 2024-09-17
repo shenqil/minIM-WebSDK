@@ -5,6 +5,7 @@
     "module": "ESNext",                 // 模块系统
     "strict": true,                     // 启用所有严格类型检查选项
     "esModuleInterop": true,            // 允许对CommonJS的默认导出进行esModule的interop操作
+    "moduleResolution": "node",  
     "skipLibCheck": true,               // 跳过声明文件的类型检查
     "forceConsistentCasingInFileNames": true,  // 对文件名进行大小写检查
     "baseUrl": "./",                    // 基础路径

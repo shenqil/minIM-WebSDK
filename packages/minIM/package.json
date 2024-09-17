@@ -21,13 +21,14 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
-    "proto:ts": "protoc --ts_out lib/protocolLayer/protobuf/proto --proto_path lib/protocolLayer/protobuf/proto lib/protocolLayer/protobuf/proto/*.proto",
+    "proto:ts": "protoc --ts_out src/protocolLayer/protobuf/proto --proto_path src/protocolLayer/protobuf/proto src/protocolLayer/protobuf/proto/*.proto",
     "rebuild": "electron-rebuild -f -a x64 -v 15.3.1 -w sqlite3"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-typescript": "^7.24.1",
+    "@protobuf-ts/plugin": "^2.9.4",
     "@types/node": "^20.12.12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
@@ -45,7 +46,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@protobuf-ts/protoc": "^2.9.4"
+    "@protobuf-ts/runtime": "^2.9.4"
   },
   "keywords": [
     "im-sdk"
