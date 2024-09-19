@@ -8,7 +8,7 @@ import type {
 } from '../index';
 
 export class WS implements ATransportLayer {
-  #opts: IConnectOpts | undefined; // 连接配置
+  #opts: IConnectOpts; // 连接配置
   #_connectStatus: IConnectStatus; // 连接状态
   #wsInstance: WebSocket | undefined; // 连接实例
   #stayConnected: boolean; // 保持连接
@@ -17,7 +17,9 @@ export class WS implements ATransportLayer {
   #eventbus: EventBus<ITransportLayerEvent>;
   #destroyReconnectTask: undefined | (() => void);
 
-  constructor() {
+  constructor(o: IConnectOpts) {
+    this.#opts = o;
+
     this.#_connectStatus = 'DISCONNECTED';
     this.#stayConnected = false;
     this.#connectMicrotasks = [];
@@ -105,9 +107,7 @@ export class WS implements ATransportLayer {
    * 发起一次连接
    * @param opt
    */
-  connect(opt: IConnectOpts): Promise<boolean> {
-    this.#opts = opt;
-
+  connect(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (this.#connectStatus === 'CONNECTED') {
         // 已连接成功

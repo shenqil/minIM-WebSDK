@@ -11,11 +11,10 @@ import {
   AProtocolLayer,
   EProtocolLayerEventName,
   IProtocolLayerEvent,
+  IProtocolOpts,
 } from '@/protocolLayer';
-import { getCMsgId, getTimestamp } from '@/utils/common';
 import EventBus from '@/utils/eventBus';
 import log from '@/utils/log';
-
 
 /**
  * API所有的事件名称
@@ -28,8 +27,7 @@ export const ChatEventName = Object.freeze({
 /**
  * API所有的事件
  * */
-export interface ChatEvent extends IProtocolLayerEvent {
-}
+export type ChatEvent = IProtocolLayerEvent;
 
 /**
  * 登陆参数
@@ -42,9 +40,7 @@ export interface ILoginParams {
 /**
  * 创建实例参数
  */
-export interface Options {
-  url: string;
-}
+export type Options = IProtocolOpts;
 
 export class ChatSDK {
   // 协议层
@@ -56,7 +52,7 @@ export class ChatSDK {
   constructor(o: Options) {
     this.#opts = Object.freeze(o);
 
-    this.#protocolInstance = new ProtocolLayer();
+    this.#protocolInstance = new ProtocolLayer(this.#opts);
   }
 
   /**
@@ -65,8 +61,6 @@ export class ChatSDK {
    */
   async login(params: ILoginParams) {
     log.info('[api][login] loginInfo', params);
-
-    this.#protocolInstance。
 
     const res = await this.#protocolInstance.login({
       uid: params.userId,
@@ -82,60 +76,58 @@ export class ChatSDK {
    */
   logout() {
     log.info('[api][login] logout');
-    setUserInfo(undefined);
-    this.#conversationStore.destroy();
     return this.#protocolInstance.logout();
   }
 
-  /**
-   * 发送消息
-   * @param msg
-   * @returns
-   */
-  async sendMsg(msg: ISendMsg) {
-    const userId = getUserInfo()?.userId;
+  // /**
+  //  * 发送消息
+  //  * @param msg
+  //  * @returns
+  //  */
+  // async sendMsg(msg: ISendMsg) {
+  //   const userId = getUserInfo()?.userId;
 
-    if (!userId) {
-      throw new Error('用户未登陆');
-    }
+  //   if (!userId) {
+  //     throw new Error('用户未登陆');
+  //   }
 
-    log.info(`[api][sendMsg] msg=`, msg);
+  //   log.info(`[api][sendMsg] msg=`, msg);
 
-    let payload = '';
-    switch (msg.type) {
-      case MessageType.TEXT:
-      case MessageType.CUSTOM:
-        payload = msg.payload;
-        break;
+  //   let payload = '';
+  //   switch (msg.type) {
+  //     case MessageType.TEXT:
+  //     case MessageType.CUSTOM:
+  //       payload = msg.payload;
+  //       break;
 
-      case MessageType.IMAGE:
-      case MessageType.VEDIO:
-      case MessageType.IMAGE:
-        await httpApi.uploadFile({ file: msg.file });
-        break;
+  //     case MessageType.IMAGE:
+  //     case MessageType.VEDIO:
+  //     case MessageType.IMAGE:
+  //       await httpApi.uploadFile({ file: msg.file });
+  //       break;
 
-      default:
-        break;
-    }
+  //     default:
+  //       break;
+  //   }
 
-    const msgId = getCMsgId();
+  //   const msgId = getCMsgId();
 
-    const data = Message.create({
-      id: msgId,
-      from: userId,
-      to: msg.to,
-      chatType: msg.chatType,
-      type: msg.type,
-      payload,
-      timestamp: getTimestamp(),
-      clientExtension: msg.clientExtension,
-      serverExtension: msg.serverExtension,
-    });
+  //   const data = Message.create({
+  //     id: msgId,
+  //     from: userId,
+  //     to: msg.to,
+  //     chatType: msg.chatType,
+  //     type: msg.type,
+  //     payload,
+  //     timestamp: getTimestamp(),
+  //     clientExtension: msg.clientExtension,
+  //     serverExtension: msg.serverExtension,
+  //   });
 
-    this.#conversationStore.updateConversationByMsg(msg.to, data);
+  //   this.#conversationStore.updateConversationByMsg(msg.to, data);
 
-    return await this.#protocolInstance.sendMsg(data);
-  }
+  //   return await this.#protocolInstance.sendMsg(data);
+  // }
 
   /**
    * 监听事件
@@ -143,7 +135,7 @@ export class ChatSDK {
    * @param handle
    * @returns Function
    */
-  on<K extends keyof ChatEvent>(name: K, handle: ChatEvent[K]): Function {
+  on<K extends keyof ChatEvent>(name: K, handle: ChatEvent[K]): () => void {
     return this.#eventBus.on(name, handle as any);
   }
 }

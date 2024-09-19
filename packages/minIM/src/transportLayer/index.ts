@@ -76,7 +76,7 @@ export abstract class ATransportLayer {
    * 发起一次连接
    * @param opt
    */
-  abstract connect(opt: IConnectOpts): Promise<boolean>;
+  abstract connect(): Promise<boolean>;
 
   /**
    * 断开连接

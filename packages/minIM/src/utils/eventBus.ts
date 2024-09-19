@@ -6,7 +6,7 @@
  * @FilePath: \PeachyTalk-IM-SDK\lib\utils\eventBus.ts
  * @Description: 发布订阅模式
  */
-import log from "../utils/log";
+import log from '../utils/log';
 
 type EventHandler<T extends any[]> = (...args: T) => void;
 
@@ -57,9 +57,12 @@ class EventBus<T extends Record<keyof T, EventHandler<any>>> {
     if (handlers) {
       handlers.forEach((handler: T[K]) => {
         try {
-          handler(...(args as any))
+          handler(...(args as any));
         } catch (error) {
-          log.error(`[eventBus] 捕获到未知错误, event=${event.toString()} error=`, error)
+          log.error(
+            `[eventBus] 捕获到未知错误, event=${event.toString()} error=`,
+            error,
+          );
         }
       });
     }

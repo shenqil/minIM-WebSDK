@@ -12,6 +12,7 @@ import {
   AProtocolLayer,
   EProtocolLayerEventName,
   IProtocolLayerEvent,
+  IProtocolOpts,
   LoginReq,
   LoginRes,
   PackData,
@@ -26,6 +27,8 @@ import log from '@/utils/log';
 import { getCMsgId } from '@/utils/common';
 
 class ProtocolLayer implements AProtocolLayer {
+  #opts: IProtocolOpts; // 协议层配置
+
   #fromId: number;
 
   #transportInstance: ATransportLayer;
@@ -36,10 +39,12 @@ class ProtocolLayer implements AProtocolLayer {
   // 内部事件
   #internalEvents: EventBus<any> = new EventBus<any>();
 
-  constructor() {
+  constructor(o: IProtocolOpts) {
+    this.#opts = o;
+
     this.#fromId = 0;
 
-    this.#transportInstance = new TransportLayer();
+    this.#transportInstance = new TransportLayer(this.#opts);
 
     this.#transportInstance.addEventListener(
       ETransportLayerEventName.MESSAGE_RECEIVED,
@@ -115,19 +120,13 @@ class ProtocolLayer implements AProtocolLayer {
   }
 
   /**
-   * 开始连接
-   * @param
-   */
-  connect(url: string) {
-    return this.#transportInstance.connect({ brokerUrl: url });
-  }
-
-  /**
    * 开始登陆
    * @param info
    */
   async login(info: LoginReq): Promise<boolean> {
     this.#fromId = info.uid;
+
+    await this.#transportInstance.connect();
 
     const resBuf = await this.#invoke(
       PackType.LOGIN_REQ,
@@ -147,6 +146,7 @@ class ProtocolLayer implements AProtocolLayer {
    */
   logout(): void {
     this.#sendData(PackType.LOGOUT_REQ, new Uint8Array());
+    this.#transportInstance.disconnect();
   }
 
   // /**

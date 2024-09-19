@@ -6,29 +6,29 @@
  * @FilePath: \PeachyTalk-IM-SDK\lib\index.ts
  * @Description: 项目入口
  */
-import ChatSDK, { Options } from "./api"
+import ChatSDK, { Options } from './api';
 
-export * from "./api"
-export * from "./protocolLayer"
-export * from "./transportLayer"
+export * from './api';
+export * from './protocolLayer';
+export * from './transportLayer';
 
-const instanceMap = new Map<string | number, ChatSDK>()
+const instanceMap = new Map<string | number, ChatSDK>();
 
 /**
  * @desc 创建实例
  * */
 export function create(opts: Options) {
-    const key = Date.now().toString()
-    let instance = instanceMap.get(key)
+  const key = Date.now().toString();
+  let instance = instanceMap.get(key);
 
-    if (!instance) {
-        instance = new ChatSDK(opts)
-        instanceMap.set(key, instance)
-    }
+  if (!instance) {
+    instance = new ChatSDK(opts);
+    instanceMap.set(key, instance);
+  }
 
-    return instance
+  return instance;
 }
 
 export default {
-    create,
-}
+  create,
+};

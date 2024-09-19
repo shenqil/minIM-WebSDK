@@ -7,60 +7,58 @@
  * @Description: 日志系统
  */
 export enum ESDKLogLevel {
-    DEBUG = 0,
-    INFO,
-    WARNING,
-    ERROR,
-    CRITICAL,
+  DEBUG = 0,
+  INFO,
+  WARNING,
+  ERROR,
+  CRITICAL,
 }
-
 
 const colors = {
-    [ESDKLogLevel.DEBUG]: "\x1b[37m[IM][DEBUG]\x1b[0m ", // 白色
-    [ESDKLogLevel.INFO]: "\x1b[34m[IM][INFO]\x1b[0m ", // 蓝色
-    [ESDKLogLevel.WARNING]: "\x1b[33m[IM][WARNING]\x1b[0m ", // 黄色
-    [ESDKLogLevel.ERROR]: "\x1b[31m[IM][ERROR]\x1b[0m ", // 红色
-    [ESDKLogLevel.CRITICAL]: "\x1b[35m[IM][CRITICAL]\x1b[0m ", // 紫色
-}
+  [ESDKLogLevel.DEBUG]: '\x1b[37m[IM][DEBUG]\x1b[0m ', // 白色
+  [ESDKLogLevel.INFO]: '\x1b[34m[IM][INFO]\x1b[0m ', // 蓝色
+  [ESDKLogLevel.WARNING]: '\x1b[33m[IM][WARNING]\x1b[0m ', // 黄色
+  [ESDKLogLevel.ERROR]: '\x1b[31m[IM][ERROR]\x1b[0m ', // 红色
+  [ESDKLogLevel.CRITICAL]: '\x1b[35m[IM][CRITICAL]\x1b[0m ', // 紫色
+};
 
-let SDKLogLevel: ESDKLogLevel = 0
+let SDKLogLevel: ESDKLogLevel = 0;
 
 export function setLogLevel(level: ESDKLogLevel) {
-    SDKLogLevel = level
+  SDKLogLevel = level;
 }
 
-
 function printLog(level: ESDKLogLevel, prefix: string, ...args: any) {
-    if (level >= SDKLogLevel) {
-        console.log(`${colors[level]}${prefix}`, ...args)
-    }
+  if (level >= SDKLogLevel) {
+    console.log(`${colors[level]}${prefix}`, ...args);
+  }
 }
 
 function debug(prefix: string, ...args: any) {
-    printLog(ESDKLogLevel.DEBUG, prefix, ...args)
+  printLog(ESDKLogLevel.DEBUG, prefix, ...args);
 }
 
 function info(prefix: string, ...args: any) {
-    printLog(ESDKLogLevel.INFO, prefix, ...args)
+  printLog(ESDKLogLevel.INFO, prefix, ...args);
 }
 
 function warn(prefix: string, ...args: any) {
-    printLog(ESDKLogLevel.WARNING, prefix, ...args)
+  printLog(ESDKLogLevel.WARNING, prefix, ...args);
 }
 
 function error(prefix: string, ...args: any) {
-    printLog(ESDKLogLevel.ERROR, prefix, ...args)
+  printLog(ESDKLogLevel.ERROR, prefix, ...args);
 }
 
 function critical(prefix: string, ...args: any) {
-    printLog(ESDKLogLevel.CRITICAL, prefix, ...args)
+  printLog(ESDKLogLevel.CRITICAL, prefix, ...args);
 }
 
 export default {
-    setLogLevel,
-    debug,
-    info,
-    warn,
-    error,
-    critical
-}
+  setLogLevel,
+  debug,
+  info,
+  warn,
+  error,
+  critical,
+};

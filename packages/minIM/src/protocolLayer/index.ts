@@ -38,10 +38,7 @@ export type ProtocolLayerEventName = keyof IProtocolLayerEvent;
 /**
  * 登录参数
  */
-export type ILoginInfo = IConnectOpts & {
-  username: string;
-  password: string;
-};
+export type IProtocolOpts = IConnectOpts;
 
 /**
  * 协议层抽象类
