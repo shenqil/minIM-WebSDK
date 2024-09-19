@@ -1,20 +1,11 @@
 {
-  "compilerOptions": {
-    "outDir": "./dist",                 // 输出目录
-    "target": "ESNext",                 // 编译的 JavaScript 版本
-    "module": "CommonJS",               // 模块系统
-    "strict": true,                     // 启用所有严格类型检查选项
-    "esModuleInterop": true,            // 允许对CommonJS的默认导出进行esModule的interop操作
-    "skipLibCheck": true,               // 跳过声明文件的类型检查
-    "forceConsistentCasingInFileNames": true,  // 对文件名进行大小写检查
-    "baseUrl": "./",                    // 基础路径
-    "paths": {
-      "@src": ["packages/peachy-talk-im-sdk/src"],                  // 配置路径别名
-      "@/*": ["packages/peachy-talk-im-sdk/src/*"]                  // 配置路径别名
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
     },
-    "types": ["node"],
-    "resolveJsonModule": true
-  },
-  "include": ["dev/*", "packages/peachy-talk-im-sdk/src/*"],              // 包含的文件
-  "exclude": ["node_modules"]   // 排除的文件或目录
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ]
 }

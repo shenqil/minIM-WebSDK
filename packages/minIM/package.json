@@ -49,7 +49,8 @@
     "@protobuf-ts/runtime": "^2.9.4"
   },
   "keywords": [
-    "im-sdk"
+    "im-sdk",
+    "websocket"
   ],
   "author": "shenqi.lv",
   "license": "ISC"
