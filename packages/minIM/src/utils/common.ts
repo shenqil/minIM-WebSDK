@@ -39,7 +39,7 @@ export function getTimestamp() {
  * @param wait
  * @returns
  */
-export function throttle(func: () => void, wait = 1000) {
+export function throttle(func: (...args: any[]) => void, wait = 1000) {
   let isWait = false;
   let lastArgs: any[];
   let lastExecutionTime = 0;

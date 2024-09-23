@@ -260,7 +260,7 @@ class LoginReq$Type extends MessageType<LoginReq> {
             { no: 2, name: "password", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    cr                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               eate(value?: PartialMessage<LoginReq>): LoginReq {
+    create(value?: PartialMessage<LoginReq>): LoginReq {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.uid = 0;
         message.password = "";

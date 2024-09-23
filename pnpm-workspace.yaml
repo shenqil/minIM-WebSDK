@@ -1,2 +1,5 @@
 packages:
-  - packages/**
+  # 所有在 packages/  子目录下的模块
+  - "packages/**"
+  # 不包括在 test 文件夹下的模块
+  - "!**/test/**"

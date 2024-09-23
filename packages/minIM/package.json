@@ -1,7 +1,6 @@
 {
   "name": "min-im",
   "version": "0.0.0",
-  "type": "module",
   "files": [
     "dist",
     "types"
