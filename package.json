@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "pnpm -F min-im run build",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "ant-design-vue": "^4.2.5",
-    "vue": "^3.4.29"
+    "vue": "^3.4.29",
+    "min-im": "workspace:*"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

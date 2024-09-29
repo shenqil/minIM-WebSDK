@@ -11,6 +11,12 @@ importers:
       ant-design-vue:
         specifier: ^4.2.5
         version: 4.2.5(vue@3.5.6(typescript@5.4.5))
+      demo:
+        specifier: workspace:*
+        version: link:packages/demo
+      min-im:
+        specifier: workspace:*
+        version: link:packages/minIM
       vue:
         specifier: ^3.4.29
         version: 3.5.6(typescript@5.4.5)
@@ -39,6 +45,18 @@ importers:
       vue-tsc:
         specifier: ^2.0.21
         version: 2.1.6(typescript@5.4.5)
+
+  packages/demo:
+    devDependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      webpack:
+        specifier: ^5.91.0
+        version: 5.94.0(webpack-cli@5.1.4)
+      webpack-cli:
+        specifier: ^5.1.4
+        version: 5.1.4(webpack@5.94.0)
 
   packages/minIM:
     dependencies:

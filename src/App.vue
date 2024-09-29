@@ -10,6 +10,15 @@
 
 
 <script setup lang="ts">
+import {onMounted} from 'vue'
+import * as minIm from "min-im"
+
+console.log(minIm.create)
+
+onMounted(()=>{
+  // imInstance = create({brokerUrl: ''})
+  // console.log(`[init] 创建IM实例`,imInstance)
+})
 
 </script>
 
