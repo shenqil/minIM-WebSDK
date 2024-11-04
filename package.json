@@ -1,0 +1,38 @@
+{
+  "name": "minim-websdk",
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index..umd.cjs"
+    }
+  },
+  "scripts": {
+    "lint:watch": "eslint . --watch",
+    "lint": "eslint ./src",
+    "format": "prettier --write .",
+    "build": "tsc && vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.14.0",
+    "eslint": "^9.14.0",
+    "eslint-plugin-vue": "^9.30.0",
+    "globals": "^15.11.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.12.2",
+    "vite": "^5.4.10"
+  }
+}

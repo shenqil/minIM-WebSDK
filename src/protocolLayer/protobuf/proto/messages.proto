@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package im;
+
+/**
+ * 数据类型
+ */
+enum PackType {
+    /**
+     * 登陆
+     */
+     LOGIN_REQ = 0;
+     LOGIN_RES = 1;
+    /**
+     * 退出
+     */
+     LOGOUT_REQ = 2;
+     LOGOUT_RES = 3;
+    /**
+     * 文本
+     */
+     TEXT = 4;
+     /**
+      * 图片
+      */
+     IMAGE = 5;
+     /**
+      * 语音
+      */
+     AUDIO = 6;
+     /**
+      * 视频
+      */
+     VEDIO = 7;
+     /**
+      * 视频
+      */
+     CUSTOM = 8;
+}
+
+/**
+ * 聊天类型
+ */
+ enum ChatType {
+  /**
+   * 单聊消息
+   */
+  CHAT = 0;
+  /**
+   * 群聊消息
+   */
+  GROUP_CHAT = 1;
+  /**
+   * 系统消息
+   */
+  SYSTEM = 2;
+}
+
+/**
+ * 一包数据
+ */
+ message PackData {
+  string id = 1; // 消息id
+  uint32 from = 2; // 发送者
+  uint32 to = 3; // 接收者
+  PackType type = 4; // 消息类型
+  bytes payload = 5; // 消息内容
+  uint32 timestamp = 6; // 时间戳
+}
+
+/**
+ * 登陆请求体
+ */
+ message LoginReq {
+  uint32 uid = 1; 
+  string password = 2; 
+}
+
+message LoginRes {
+  uint32 code = 1; 
+  string reason = 2; 
+}
