@@ -1,4 +1,4 @@
-import { IProtocolLayerEvent, IProtocolOpts } from "@/protocolLayer";
+import { IProtocolLayerEvent, IProtocolOpts } from "../protocolLayer";
 /**
  * API所有的事件名称
  * */

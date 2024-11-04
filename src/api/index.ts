@@ -6,15 +6,15 @@
  * @FilePath: \PeachyTalk-IM-SDK\lib\api\index.ts
  * @Description: 对外暴露的所有API
  */
-import ProtocolLayer from "@/protocolLayer/protobuf";
+import ProtocolLayer from "../protocolLayer/protobuf";
 import {
   AProtocolLayer,
   EProtocolLayerEventName,
   IProtocolLayerEvent,
   IProtocolOpts,
-} from "@/protocolLayer";
-import EventBus from "@/utils/eventBus";
-import log from "@/utils/log";
+} from "../protocolLayer";
+import EventBus from "../utils/eventBus";
+import log from "../utils/log";
 
 /**
  * API所有的事件名称

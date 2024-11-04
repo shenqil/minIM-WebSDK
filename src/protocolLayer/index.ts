@@ -10,7 +10,7 @@ import {
   ETransportLayerEventName,
   IConnectOpts,
   ITransportLayerEvent,
-} from "@/transportLayer/index";
+} from "../transportLayer/index";
 import { LoginReq } from "./protobuf/proto/messages";
 
 export * from "./protobuf/proto/messages";

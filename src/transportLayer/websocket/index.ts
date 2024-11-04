@@ -1,4 +1,4 @@
-import EventBus from "@/utils/eventBus";
+import EventBus from "../../utils/eventBus";
 import type {
   ATransportLayer,
   IConnectOpts,

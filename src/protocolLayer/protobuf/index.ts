@@ -7,7 +7,7 @@
  * @Description: 协议层实现
  */
 
-import EventBus from "@/utils/eventBus";
+import EventBus from "../../utils/eventBus";
 import {
   AProtocolLayer,
   EProtocolLayerEventName,
@@ -23,10 +23,10 @@ import {
   ETransportLayerEventName,
   ITransportLayerEvent,
   ITransportLayerEventNameKey,
-} from "@/transportLayer/index";
-import TransportLayer from "@/transportLayer/websocket/index";
-import log from "@/utils/log";
-import { getCMsgId } from "@/utils/common";
+} from "../../transportLayer/index";
+import TransportLayer from "../../transportLayer/websocket/index";
+import log from "../../utils/log";
+import { getCMsgId } from "../../utils/common";
 
 class ProtocolLayer implements AProtocolLayer {
   #opts: IProtocolOpts; // 协议层配置
