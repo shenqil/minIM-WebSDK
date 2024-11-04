@@ -7,6 +7,10 @@ import { ref } from 'vue';
 
 <template>
     <div>
+        <a-space wrap>
+            <a-button type="primary">Primary Button</a-button>
+        </a-space>
+
         {{count}}
     </div>
 </template>
