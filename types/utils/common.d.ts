@@ -10,4 +10,4 @@ export declare function getTimestamp(): bigint;
  * @param wait
  * @returns
  */
-export declare function throttle(func: (...args: any[]) => void, wait?: number): (...args: any[]) => void;
+export declare function throttle(func: (...args: unknown[]) => void, wait?: number): (...args: unknown[]) => void;

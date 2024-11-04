@@ -38,6 +38,6 @@
     "vite": "^5.4.10"
   },
   "dependencies": {
-    "@protobuf-ts/protoc": "^2.9.4"
+    "@protobuf-ts/runtime": "^2.9.4"
   }
 }

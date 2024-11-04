@@ -1,6 +1,6 @@
-import { IConnectOpts, ITransportLayerEvent } from '@/transportLayer/index';
-import { LoginReq } from './protobuf/proto/messages';
-export * from './protobuf/proto/messages';
+import { IConnectOpts, ITransportLayerEvent } from "@/transportLayer/index";
+import { LoginReq } from "./protobuf/proto/messages";
+export * from "./protobuf/proto/messages";
 /**
  * 协议层所有的事件名称
  * */
@@ -13,7 +13,7 @@ export declare const EProtocolLayerEventName: Readonly<{
 /**
  * 协议层所有的事件
  * */
-export interface IProtocolLayerEvent extends ITransportLayerEvent {
+export interface IProtocolLayerEvent extends Omit<ITransportLayerEvent, "MESSAGE_RECEIVED"> {
     [EProtocolLayerEventName.MESSAGE_RECEIVED]: () => void;
 }
 /**

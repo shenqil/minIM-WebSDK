@@ -1,4 +1,4 @@
-import type { ATransportLayer, IConnectOpts, IConnectStatus, ITransportLayerEvent, TransportLayerEventName } from '../index';
+import type { ATransportLayer, IConnectOpts, IConnectStatus, ITransportLayerEvent, TransportLayerEventName } from "../index";
 export declare class WS implements ATransportLayer {
     #private;
     constructor(o: IConnectOpts);

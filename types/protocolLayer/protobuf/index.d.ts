@@ -1,4 +1,4 @@
-import { AProtocolLayer, IProtocolOpts, LoginReq } from '../index';
+import { AProtocolLayer, IProtocolOpts, LoginReq } from "../index";
 declare class ProtocolLayer implements AProtocolLayer {
     #private;
     constructor(o: IProtocolOpts);

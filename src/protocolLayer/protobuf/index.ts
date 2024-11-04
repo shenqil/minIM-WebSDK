@@ -21,6 +21,8 @@ import {
 import {
   ATransportLayer,
   ETransportLayerEventName,
+  ITransportLayerEvent,
+  ITransportLayerEventNameKey,
 } from "@/transportLayer/index";
 import TransportLayer from "@/transportLayer/websocket/index";
 import log from "@/utils/log";
@@ -60,11 +62,17 @@ class ProtocolLayer implements AProtocolLayer {
 
     // 抛出内部所有事件
     Object.keys(ETransportLayerEventName).forEach((key) => {
-      const name = EProtocolLayerEventName[key];
-      name &&
-        this.#transportInstance.addEventListener(name, (...args: any) => {
-          this.#eventBus.emit(name, ...args);
-        });
+      const name =
+        EProtocolLayerEventName[key as unknown as ITransportLayerEventNameKey];
+
+      if (name !== "MESSAGE_RECEIVED") {
+        this.#transportInstance.addEventListener(
+          name,
+          (...args: Parameters<ITransportLayerEvent[typeof name]>) => {
+            this.#eventBus.emit(name, ...args);
+          }
+        );
+      }
     });
   }
 
@@ -97,14 +105,10 @@ class ProtocolLayer implements AProtocolLayer {
       });
 
       this.#transportInstance.send(PackData.toBinary(msg));
-      const offFn = this.#internalEvents.once(
-        msg.id.toString(),
-        (res: PackData) => {
-          cancelFn?.();
-
-          resolve(res.payload);
-        }
-      );
+      const offFn = this.#internalEvents.once(msg.id.toString(), (res) => {
+        cancelFn?.();
+        resolve((res as PackData).payload);
+      });
 
       if (waitTime) {
         const timer = setTimeout(() => {

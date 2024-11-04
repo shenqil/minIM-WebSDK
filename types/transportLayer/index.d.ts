@@ -3,7 +3,7 @@ export declare const clientId = "DESKTOP";
 /**
  * 当前连接状态
  */
-export type IConnectStatus = 'CONNECTING' | 'CONNECTED' | 'RECONNECTING' | 'DISCONNECTED';
+export type IConnectStatus = "CONNECTING" | "CONNECTED" | "RECONNECTING" | "DISCONNECTED";
 /**
  * 断开类型
  */
@@ -39,15 +39,16 @@ export declare const ETransportLayerEventName: Readonly<{
     /**
      * 接收到消息
      * */
-    MESSAGE_RECEIVED: "TRANSPORT_LAYER_MESSAGE_RECEIVED";
+    MESSAGE_RECEIVED: "MESSAGE_RECEIVED";
 }>;
+export type ITransportLayerEventNameKey = keyof typeof ETransportLayerEventName;
 /**
  * 连接层所有的事件
  */
 export interface ITransportLayerEvent {
     [ETransportLayerEventName.CONNECTING]: () => void;
     [ETransportLayerEventName.CONNECTED]: () => void;
-    [ETransportLayerEventName.DISCONNECTED]: (type: EDisconnectType, reason?: any) => void;
+    [ETransportLayerEventName.DISCONNECTED]: (type: EDisconnectType, reason?: unknown) => void;
     [ETransportLayerEventName.MESSAGE_RECEIVED]: (data: Uint8Array) => void;
 }
 /**

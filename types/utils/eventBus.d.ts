@@ -1,5 +1,4 @@
-type EventHandler<T extends any[]> = (...args: T) => void;
-declare class EventBus<T extends Record<keyof T, EventHandler<any>>> {
+declare class EventBus<T extends Record<keyof T, (...args: any[]) => void>> {
     private events;
     on<K extends keyof T>(event: K, handler: T[K]): () => void;
     once<K extends keyof T>(event: K, handler: T[K]): () => void;

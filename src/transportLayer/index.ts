@@ -47,8 +47,10 @@ export const ETransportLayerEventName = Object.freeze({
   /**
    * 接收到消息
    * */
-  MESSAGE_RECEIVED: "TRANSPORT_LAYER_MESSAGE_RECEIVED",
+  MESSAGE_RECEIVED: "MESSAGE_RECEIVED",
 });
+
+export type ITransportLayerEventNameKey = keyof typeof ETransportLayerEventName;
 
 /**
  * 连接层所有的事件
