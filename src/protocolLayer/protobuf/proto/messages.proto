@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "./im";
+
 package im;
 
 /**
@@ -9,33 +11,19 @@ enum PackType {
     /**
      * 登陆
      */
-     LOGIN_REQ = 0;
-     LOGIN_RES = 1;
+     LOGIN = 0;
     /**
      * 退出
      */
-     LOGOUT_REQ = 2;
-     LOGOUT_RES = 3;
+     LOGOUT = 1;
     /**
-     * 文本
+     * 响应
      */
-     TEXT = 4;
-     /**
-      * 图片
-      */
-     IMAGE = 5;
-     /**
-      * 语音
-      */
-     AUDIO = 6;
-     /**
-      * 视频
-      */
-     VEDIO = 7;
-     /**
-      * 视频
-      */
-     CUSTOM = 8;
+     RESPONSE = 2;
+    /**
+     * 消息
+     */
+     MESSAGE = 3;
 }
 
 /**
@@ -57,6 +45,33 @@ enum PackType {
 }
 
 /**
+ * 消息类型
+ */
+ enum MessageType {
+    /**
+     * 文本
+     */
+     TEXT = 0;
+     /**
+      * 图片
+      */
+     IMAGE = 1;
+     /**
+      * 语音
+      */
+     AUDIO = 2;
+     /**
+      * 视频
+      */
+     VEDIO = 3;
+     /**
+      * 自定义消息
+      */
+     CUSTOM = 4;
+}
+
+
+/**
  * 一包数据
  */
  message PackData {
@@ -65,18 +80,31 @@ enum PackType {
   uint32 to = 3; // 接收者
   PackType type = 4; // 消息类型
   bytes payload = 5; // 消息内容
-  uint32 timestamp = 6; // 时间戳
+  uint64 timestamp = 6; // 时间戳
 }
 
 /**
  * 登陆请求体
  */
- message LoginReq {
+ message LoginPack {
   uint32 uid = 1; 
-  string password = 2; 
+  uint32 clientType = 2; 
+  string password = 3; 
+
 }
 
-message LoginRes {
+/**
+ * 退出登录请求体
+ */
+ message LogoutPack {
   uint32 code = 1; 
   string reason = 2; 
+}
+
+/**
+ * 通用相应体
+ */
+message ResponsePack {
+  uint32 code = 1; 
+  string payload = 2; 
 }

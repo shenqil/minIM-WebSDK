@@ -65,6 +65,7 @@ export class ChatSDK {
     const res = await this.#protocolInstance.login({
       uid: params.userId,
       password: params.token,
+      clientType: 100,
     });
 
     return res;

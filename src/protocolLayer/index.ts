@@ -11,7 +11,7 @@ import {
   IConnectOpts,
   ITransportLayerEvent,
 } from "../transportLayer/index";
-import { LoginReq } from "./protobuf/proto/messages";
+import { LoginPack } from "./protobuf/proto/messages";
 
 export * from "./protobuf/proto/messages";
 
@@ -49,7 +49,7 @@ export abstract class AProtocolLayer {
    * 开始登陆
    * @param info
    */
-  abstract login(info: LoginReq): Promise<boolean>;
+  abstract login(info: LoginPack): Promise<boolean>;
 
   /**
    * 退出登陆

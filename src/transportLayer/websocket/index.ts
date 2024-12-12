@@ -15,7 +15,7 @@ export class WS implements ATransportLayer {
   #connectMicrotasks: Array<
     [
       (value: boolean | PromiseLike<boolean>) => void,
-      (reason?: unknown) => void
+      (reason?: unknown) => void,
     ]
   > = []; // 连接任务
   #lastConnectErr: unknown;
@@ -103,7 +103,7 @@ export class WS implements ATransportLayer {
       };
 
       this.#wsInstance.onmessage = (ev) => {
-        console.log(ev);
+        this.#eventbus.emit("MESSAGE_RECEIVED", new Uint8Array(ev.data));
       };
     });
   }

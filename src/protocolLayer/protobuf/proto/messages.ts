@@ -9,7 +9,7 @@ import type { IBinaryReader } from "@protobuf-ts/runtime";
 import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
+import { MessageType as MessageType$ } from "@protobuf-ts/runtime";
 /**
  * *
  * 一包数据
@@ -38,30 +38,37 @@ export interface PackData {
      */
     payload: Uint8Array; // 消息内容
     /**
-     * @generated from protobuf field: uint32 timestamp = 6;
+     * @generated from protobuf field: uint64 timestamp = 6;
      */
-    timestamp: number; // 时间戳
+    timestamp: bigint; // 时间戳
 }
 /**
  * *
  * 登陆请求体
  *
- * @generated from protobuf message im.LoginReq
+ * @generated from protobuf message im.LoginPack
  */
-export interface LoginReq {
+export interface LoginPack {
     /**
      * @generated from protobuf field: uint32 uid = 1;
      */
     uid: number;
     /**
-     * @generated from protobuf field: string password = 2;
+     * @generated from protobuf field: uint32 clientType = 2;
+     */
+    clientType: number;
+    /**
+     * @generated from protobuf field: string password = 3;
      */
     password: string;
 }
 /**
- * @generated from protobuf message im.LoginRes
+ * *
+ * 退出登录请求体
+ *
+ * @generated from protobuf message im.LogoutPack
  */
-export interface LoginRes {
+export interface LogoutPack {
     /**
      * @generated from protobuf field: uint32 code = 1;
      */
@@ -70,6 +77,22 @@ export interface LoginRes {
      * @generated from protobuf field: string reason = 2;
      */
     reason: string;
+}
+/**
+ * *
+ * 通用相应体
+ *
+ * @generated from protobuf message im.ResponsePack
+ */
+export interface ResponsePack {
+    /**
+     * @generated from protobuf field: uint32 code = 1;
+     */
+    code: number;
+    /**
+     * @generated from protobuf field: string payload = 2;
+     */
+    payload: string;
 }
 /**
  * *
@@ -82,59 +105,30 @@ export enum PackType {
      * *
      * 登陆
      *
-     * @generated from protobuf enum value: LOGIN_REQ = 0;
+     * @generated from protobuf enum value: LOGIN = 0;
      */
-    LOGIN_REQ = 0,
-    /**
-     * @generated from protobuf enum value: LOGIN_RES = 1;
-     */
-    LOGIN_RES = 1,
+    LOGIN = 0,
     /**
      * *
      * 退出
      *
-     * @generated from protobuf enum value: LOGOUT_REQ = 2;
+     * @generated from protobuf enum value: LOGOUT = 1;
      */
-    LOGOUT_REQ = 2,
-    /**
-     * @generated from protobuf enum value: LOGOUT_RES = 3;
-     */
-    LOGOUT_RES = 3,
+    LOGOUT = 1,
     /**
      * *
-     * 文本
+     * 响应
      *
-     * @generated from protobuf enum value: TEXT = 4;
+     * @generated from protobuf enum value: RESPONSE = 2;
      */
-    TEXT = 4,
+    RESPONSE = 2,
     /**
      * *
-     * 图片
+     * 消息
      *
-     * @generated from protobuf enum value: IMAGE = 5;
+     * @generated from protobuf enum value: MESSAGE = 3;
      */
-    IMAGE = 5,
-    /**
-     * *
-     * 语音
-     *
-     * @generated from protobuf enum value: AUDIO = 6;
-     */
-    AUDIO = 6,
-    /**
-     * *
-     * 视频
-     *
-     * @generated from protobuf enum value: VEDIO = 7;
-     */
-    VEDIO = 7,
-    /**
-     * *
-     * 视频
-     *
-     * @generated from protobuf enum value: CUSTOM = 8;
-     */
-    CUSTOM = 8
+    MESSAGE = 3
 }
 /**
  * *
@@ -165,8 +159,51 @@ export enum ChatType {
      */
     SYSTEM = 2
 }
+/**
+ * *
+ * 消息类型
+ *
+ * @generated from protobuf enum im.MessageType
+ */
+export enum MessageType {
+    /**
+     * *
+     * 文本
+     *
+     * @generated from protobuf enum value: TEXT = 0;
+     */
+    TEXT = 0,
+    /**
+     * *
+     * 图片
+     *
+     * @generated from protobuf enum value: IMAGE = 1;
+     */
+    IMAGE = 1,
+    /**
+     * *
+     * 语音
+     *
+     * @generated from protobuf enum value: AUDIO = 2;
+     */
+    AUDIO = 2,
+    /**
+     * *
+     * 视频
+     *
+     * @generated from protobuf enum value: VEDIO = 3;
+     */
+    VEDIO = 3,
+    /**
+     * *
+     * 自定义消息
+     *
+     * @generated from protobuf enum value: CUSTOM = 4;
+     */
+    CUSTOM = 4
+}
 // @generated message type with reflection information, may provide speed optimized methods
-class PackData$Type extends MessageType<PackData> {
+class PackData$Type extends MessageType$<PackData> {
     constructor() {
         super("im.PackData", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -174,7 +211,7 @@ class PackData$Type extends MessageType<PackData> {
             { no: 3, name: "to", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
             { no: 4, name: "type", kind: "enum", T: () => ["im.PackType", PackType] },
             { no: 5, name: "payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 6, name: "timestamp", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 6, name: "timestamp", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ }
         ]);
     }
     create(value?: PartialMessage<PackData>): PackData {
@@ -184,7 +221,7 @@ class PackData$Type extends MessageType<PackData> {
         message.to = 0;
         message.type = 0;
         message.payload = new Uint8Array(0);
-        message.timestamp = 0;
+        message.timestamp = 0n;
         if (value !== undefined)
             reflectionMergePartial<PackData>(this, message, value);
         return message;
@@ -209,8 +246,8 @@ class PackData$Type extends MessageType<PackData> {
                 case /* bytes payload */ 5:
                     message.payload = reader.bytes();
                     break;
-                case /* uint32 timestamp */ 6:
-                    message.timestamp = reader.uint32();
+                case /* uint64 timestamp */ 6:
+                    message.timestamp = reader.uint64().toBigInt();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -239,9 +276,9 @@ class PackData$Type extends MessageType<PackData> {
         /* bytes payload = 5; */
         if (message.payload.length)
             writer.tag(5, WireType.LengthDelimited).bytes(message.payload);
-        /* uint32 timestamp = 6; */
-        if (message.timestamp !== 0)
-            writer.tag(6, WireType.Varint).uint32(message.timestamp);
+        /* uint64 timestamp = 6; */
+        if (message.timestamp !== 0n)
+            writer.tag(6, WireType.Varint).uint64(message.timestamp);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -253,22 +290,24 @@ class PackData$Type extends MessageType<PackData> {
  */
 export const PackData = new PackData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class LoginReq$Type extends MessageType<LoginReq> {
+class LoginPack$Type extends MessageType$<LoginPack> {
     constructor() {
-        super("im.LoginReq", [
+        super("im.LoginPack", [
             { no: 1, name: "uid", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 2, name: "password", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "clientType", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "password", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<LoginReq>): LoginReq {
+    create(value?: PartialMessage<LoginPack>): LoginPack {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.uid = 0;
+        message.clientType = 0;
         message.password = "";
         if (value !== undefined)
-            reflectionMergePartial<LoginReq>(this, message, value);
+            reflectionMergePartial<LoginPack>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LoginReq): LoginReq {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LoginPack): LoginPack {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -276,7 +315,10 @@ class LoginReq$Type extends MessageType<LoginReq> {
                 case /* uint32 uid */ 1:
                     message.uid = reader.uint32();
                     break;
-                case /* string password */ 2:
+                case /* uint32 clientType */ 2:
+                    message.clientType = reader.uint32();
+                    break;
+                case /* string password */ 3:
                     message.password = reader.string();
                     break;
                 default:
@@ -290,13 +332,16 @@ class LoginReq$Type extends MessageType<LoginReq> {
         }
         return message;
     }
-    internalBinaryWrite(message: LoginReq, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: LoginPack, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* uint32 uid = 1; */
         if (message.uid !== 0)
             writer.tag(1, WireType.Varint).uint32(message.uid);
-        /* string password = 2; */
+        /* uint32 clientType = 2; */
+        if (message.clientType !== 0)
+            writer.tag(2, WireType.Varint).uint32(message.clientType);
+        /* string password = 3; */
         if (message.password !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.password);
+            writer.tag(3, WireType.LengthDelimited).string(message.password);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -304,26 +349,26 @@ class LoginReq$Type extends MessageType<LoginReq> {
     }
 }
 /**
- * @generated MessageType for protobuf message im.LoginReq
+ * @generated MessageType for protobuf message im.LoginPack
  */
-export const LoginReq = new LoginReq$Type();
+export const LoginPack = new LoginPack$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class LoginRes$Type extends MessageType<LoginRes> {
+class LogoutPack$Type extends MessageType$<LogoutPack> {
     constructor() {
-        super("im.LoginRes", [
+        super("im.LogoutPack", [
             { no: 1, name: "code", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
             { no: 2, name: "reason", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<LoginRes>): LoginRes {
+    create(value?: PartialMessage<LogoutPack>): LogoutPack {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.code = 0;
         message.reason = "";
         if (value !== undefined)
-            reflectionMergePartial<LoginRes>(this, message, value);
+            reflectionMergePartial<LogoutPack>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LoginRes): LoginRes {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LogoutPack): LogoutPack {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -345,7 +390,7 @@ class LoginRes$Type extends MessageType<LoginRes> {
         }
         return message;
     }
-    internalBinaryWrite(message: LoginRes, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: LogoutPack, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* uint32 code = 1; */
         if (message.code !== 0)
             writer.tag(1, WireType.Varint).uint32(message.code);
@@ -359,6 +404,61 @@ class LoginRes$Type extends MessageType<LoginRes> {
     }
 }
 /**
- * @generated MessageType for protobuf message im.LoginRes
+ * @generated MessageType for protobuf message im.LogoutPack
  */
-export const LoginRes = new LoginRes$Type();
+export const LogoutPack = new LogoutPack$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ResponsePack$Type extends MessageType$<ResponsePack> {
+    constructor() {
+        super("im.ResponsePack", [
+            { no: 1, name: "code", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "payload", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ResponsePack>): ResponsePack {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.code = 0;
+        message.payload = "";
+        if (value !== undefined)
+            reflectionMergePartial<ResponsePack>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ResponsePack): ResponsePack {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 code */ 1:
+                    message.code = reader.uint32();
+                    break;
+                case /* string payload */ 2:
+                    message.payload = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ResponsePack, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 code = 1; */
+        if (message.code !== 0)
+            writer.tag(1, WireType.Varint).uint32(message.code);
+        /* string payload = 2; */
+        if (message.payload !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.payload);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message im.ResponsePack
+ */
+export const ResponsePack = new ResponsePack$Type();

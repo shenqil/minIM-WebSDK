@@ -13,8 +13,8 @@ import {
   EProtocolLayerEventName,
   IProtocolLayerEvent,
   IProtocolOpts,
-  LoginReq,
-  LoginRes,
+  LoginPack,
+  ResponsePack,
   PackData,
   PackType,
 } from "../index";
@@ -52,11 +52,20 @@ class ProtocolLayer implements AProtocolLayer {
     this.#transportInstance.addEventListener(
       ETransportLayerEventName.MESSAGE_RECEIVED,
       (data) => {
-        // 接收到消息
-        this.#internalEvents.emit(
-          EProtocolLayerEventName.MESSAGE_RECEIVED,
-          PackData.fromBinary(data)
-        );
+        const packData = PackData.fromBinary(data);
+
+        switch (packData.type) {
+          case PackType.RESPONSE:
+            const response = ResponsePack.fromBinary(packData.payload);
+            this.#internalEvents.emit(packData.id, response);
+            break;
+
+          default:
+            log.info(
+              `[protobuf][constructor] 未处理消息, type = ${packData.type}`
+            );
+            break;
+        }
       }
     );
 
@@ -82,7 +91,7 @@ class ProtocolLayer implements AProtocolLayer {
       from: this.#fromId,
       type,
       payload,
-      timestamp: Date.now(),
+      timestamp: BigInt(Date.now()),
     });
 
     this.#transportInstance.send(PackData.toBinary(msg));
@@ -92,22 +101,22 @@ class ProtocolLayer implements AProtocolLayer {
     type: PackType,
     payload: Uint8Array,
     waitTime = 3000
-  ): Promise<Uint8Array> {
+  ): Promise<ResponsePack> {
     return new Promise((resolve, reject) => {
       let cancelFn: undefined | (() => void) = undefined;
 
       const msg = PackData.create({
-        id: getCMsgId(),
+        id: type === PackType.MESSAGE ? getCMsgId() : type.toString(),
         from: this.#fromId,
         type,
         payload,
-        timestamp: Date.now(),
+        timestamp: BigInt(Date.now()),
       });
 
       this.#transportInstance.send(PackData.toBinary(msg));
-      const offFn = this.#internalEvents.once(msg.id.toString(), (res) => {
+      const offFn = this.#internalEvents.once(msg.id, (res) => {
         cancelFn?.();
-        resolve((res as PackData).payload);
+        resolve(res as ResponsePack);
       });
 
       if (waitTime) {
@@ -128,19 +137,14 @@ class ProtocolLayer implements AProtocolLayer {
    * 开始登陆
    * @param info
    */
-  async login(info: LoginReq): Promise<boolean> {
+  async login(info: LoginPack): Promise<boolean> {
     this.#fromId = info.uid;
 
     await this.#transportInstance.connect();
 
-    const resBuf = await this.#invoke(
-      PackType.LOGIN_REQ,
-      LoginReq.toBinary(info)
-    );
-
-    const res = LoginRes.fromBinary(resBuf);
+    const res = await this.#invoke(PackType.LOGIN, LoginPack.toBinary(info));
     if (res.code) {
-      throw new Error(res.reason);
+      throw new Error(res.payload);
     }
 
     return true;
@@ -150,7 +154,7 @@ class ProtocolLayer implements AProtocolLayer {
    * 退出登陆
    */
   logout(): void {
-    this.#sendData(PackType.LOGOUT_REQ, new Uint8Array());
+    this.#sendData(PackType.LOGOUT, new Uint8Array());
     this.#transportInstance.disconnect();
   }
 
