@@ -63,9 +63,9 @@ function useBase() {
     try {
       const res = await instance.logout();
 
-      console.log(`[logout] 登陆成功`, res);
+      console.log(`[logout] 退出登录成功`, res);
     } catch (error) {
-      console.log(`[logout] 登陆失败 err`, error);
+      console.log(`[logout] 退出登录失败 err`, error);
     }
   };
 

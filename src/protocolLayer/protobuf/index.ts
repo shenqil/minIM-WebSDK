@@ -153,9 +153,16 @@ class ProtocolLayer implements AProtocolLayer {
   /**
    * 退出登陆
    */
-  logout(): void {
-    this.#sendData(PackType.LOGOUT, new Uint8Array());
-    this.#transportInstance.disconnect();
+  async logout(): Promise<boolean> {
+    try {
+      await this.#invoke(PackType.LOGOUT, new Uint8Array(), 1500);
+    } catch (error) {
+      throw error;
+    } finally {
+      this.#transportInstance.disconnect();
+    }
+
+    return true;
   }
 
   // /**
